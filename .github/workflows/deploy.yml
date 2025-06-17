@@ -2,33 +2,35 @@ name: Despliega
 
 on:
   push:
-    branches:
-      - webintegral
-  pull_request:
-    branches:
-      - webintegral
+    branches: [webintegral]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-
+          
       - name: Install dependencies
         run: npm install
-
+        
       - name: Build the app
-        run: npm run build
-
+        run: |
+          npm run build
+          ls -la build/  # Verificación
+          
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
+          full_commit_message: "Deploy: ${{ github.sha }}"
