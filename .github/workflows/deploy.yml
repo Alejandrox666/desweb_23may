@@ -3,6 +3,8 @@ name: Despliega
 on:
   push:
     branches: [webintegral]
+  pull_request:
+    branches: [webintegral]
 
 permissions:
   contents: write
