@@ -3,10 +3,10 @@ name: Despliega
 on:
   push:
     branches:
-      - main
+      - webintegral
   pull_request:
     branches:
-      - main
+      - webintegral
 
 jobs:
   deploy:
