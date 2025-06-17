@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/desweb_23may/static/js/main.50645720.js",
+    "main.js": "/desweb_23may/static/js/main.fae5cd59.js",
     "index.html": "/desweb_23may/index.html",
-    "main.50645720.js.map": "/desweb_23may/static/js/main.50645720.js.map"
+    "main.fae5cd59.js.map": "/desweb_23may/static/js/main.fae5cd59.js.map"
   },
   "entrypoints": [
-    "static/js/main.50645720.js"
+    "static/js/main.fae5cd59.js"
   ]
 }
