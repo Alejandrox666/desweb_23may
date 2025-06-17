@@ -1,15 +1,17 @@
 import Navbar from "./Navbar";
+import Layout from "./Layout";
+import { BrowserRouter } from 'react-router-dom';
 function App() {
    return(
        <>
+       
        <Navbar />
-        <div>
-           <h2>Bienvenido a mi página Web</h2>
-           <hr />
-           <p>
-               Este simple Aplicación es creado con React, De ALejandro Hernández Negrete
-           </p>
-       </div>
+       <BrowserRouter>
+       
+      <Layout />
+      
+    </BrowserRouter>
+        
        </>
    )
 
