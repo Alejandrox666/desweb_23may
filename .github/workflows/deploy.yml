@@ -1,38 +1,28 @@
-name: Despliega
-
+name: Docker
 on:
   push:
-    branches: [webintegral]
-  pull_request:
-    branches: [webintegral]
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+    branches:
+      - webintegral
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          
-      - name: Install dependencies
-        run: npm install
-        
-      - name: Build the app
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Construir imagen Docker
+        run: docker build -t react-ghpages .
+
+      - name: Extraer el build del contenedor
         run: |
-          npm run build
-          ls -la build/  # Verificación
-          
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+          CONTAINER_ID=$(docker create react-ghpages)
+          docker cp $CONTAINER_ID:/app/build ./build
+          docker rm $CONTAINER_ID
+
+      - name: Publicar en GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          full_commit_message: "Deploy: ${{ github.sha }}"
