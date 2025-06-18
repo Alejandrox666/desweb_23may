@@ -17,7 +17,7 @@ jobs:
 
       - name: Extraer el build del contenedor
         run: |
-          CONTAINER_ID=$(docker create react-ghpages)
+          CONTAINER_ID=$(docker create webintegral)
           docker cp $CONTAINER_ID:/app/build ./build
           docker rm $CONTAINER_ID
 
