@@ -7,6 +7,8 @@ COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 
+##COnstruir los archivos del build
+Run npm run build
 # Expone el puerto de React
 EXPOSE 4200
 # Ejecuta la aplicación en desarrollo
