@@ -1,8 +1,15 @@
-name: Docker 
+name: Docker Deploy to GitHub Pages
+
 on:
   push:
     branches:
       - webintegral
+
+# Añade estos permisos esenciales
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
@@ -10,19 +17,27 @@ jobs:
 
     steps:
       - name: Clonar el repositorio
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Actualizado a v4
 
       - name: Construir imagen Docker
         run: docker build -t react-ghpages .
+
+      - name: Verificar contenido del contenedor (debug)
+        run: |
+          docker run --rm react-ghpages ls -la /app  # Verifica que existe /app/build
 
       - name: Extraer el build del contenedor
         run: |
           CONTAINER_ID=$(docker create react-ghpages)
           docker cp $CONTAINER_ID:/app/build ./build
           docker rm $CONTAINER_ID
+          
+      - name: Verificar archivos extraídos
+        run: ls -la ./build  # Confirma que los archivos se copiaron
 
       - name: Publicar en GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4  # Actualizado a v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
+          full_commit_message: "Deploy: ${{ github.sha }}"
